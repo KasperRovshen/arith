@@ -43,10 +43,6 @@ public:
         return !(*this == other);
     }
 
-    // Функция для получения двоичного представления значения
-    std::string toBinaryString() const {
-        return std::bitset<sizeof(BASE) * 8>(value).to_string();
-    }
 
     BASE getValue() const {
         return value;
@@ -54,17 +50,11 @@ public:
 };
 
 int main() {
-    ones_compl_int<int> a(10);
-    ones_compl_int<int> b(-5);
+    ones_compl_int<int32_t> a(10);
+    ones_compl_int<int32_t> b(-5);
 
-    ones_compl_int<int> c = a + b;
-    ones_compl_int<int> d = a - b;
-
-    std::cout << "a + b = " << a.toBinaryString() << std::endl;
-    std::cout << "a - b = " << b.toBinaryString() << std::endl;
-
-    std::cout << "a + b = " << c.toBinaryString() << std::endl;
-    std::cout << "a - b = " << d.toBinaryString() << std::endl;
+    ones_compl_int<int32_t> c = a + b;
+    ones_compl_int<int32_t> d = a - b;
 
     std::cout << "a + b = " << c.getValue() << std::endl;
     std::cout << "a - b = " << d.getValue() << std::endl;
