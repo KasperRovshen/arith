@@ -4,34 +4,33 @@
 #include <algorithm>
 #include <stdexcept>
 
-// Класс Trit представляет одну троичную цифру (трит)
 class Trit {
 public:
     enum Value { Zero = 0, One, Two };
 
-    // Конструктор по умолчанию, принимающий значение 0
+    // конструктор по умолчанию, принимающий значение 0
     Trit(Value value = Zero) : value(value) {
         if (value < Zero || value > Two) {
             throw std::invalid_argument("Invalid Trit value");
         }
     }
 
-    // Перегрузка оператора сложения
+    //оператора сложения
     Trit operator+(const Trit& other) const {
         return Trit(static_cast<Value>((value + other.value) % 3));
     }
 
-    // Перегрузка оператора вычитания
+    //оператора вычитания
     Trit operator-(const Trit& other) const {
         return Trit(static_cast<Value>((value + 3 - other.value) % 3));
     }
 
-    // Перегрузка оператора умножения
+    //оператора умножения
     Trit operator*(const Trit& other) const {
         return Trit(static_cast<Value>((value * other.value) % 3));
     }
 
-    // Перегрузка оператора вывода
+    //оператора вывода
     friend std::ostream& operator<<(std::ostream& os, const Trit& trit) {
         os << static_cast<int>(trit.value);
         return os;
@@ -41,7 +40,6 @@ private:
     Value value;
 };
 
-// Класс Triit представляет последовательность тритов (трайт)
 class Triit {
 public:
     Triit(const std::string& str) {
@@ -58,7 +56,7 @@ public:
         }
     }
 
-    // Перегрузка оператора сложения
+    //оператора сложения
     Triit operator+(const Triit& other) const {
         Triit result = *this;
         for (size_t i = 0; i < std::min(trits.size(), other.trits.size()); ++i) {
@@ -67,7 +65,7 @@ public:
         return result;
     }
 
-    // Перегрузка оператора вычитания
+    //оператора вычитания
     Triit operator-(const Triit& other) const {
         Triit result = *this;
         for (size_t i = 0; i < std::min(trits.size(), other.trits.size()); ++i) {
@@ -76,7 +74,7 @@ public:
         return result;
     }
 
-    // Перегрузка оператора умножения
+    //оператора умножения
     Triit operator*(const Triit& other) const {
         Triit result = *this;
         for (size_t i = 0; i < std::min(trits.size(), other.trits.size()); ++i) {
@@ -85,7 +83,7 @@ public:
         return result;
     }
 
-    // Перегрузка оператора вывода
+    //оператора вывода
     friend std::ostream& operator<<(std::ostream& os, const Triit& triit) {
         for (const Trit& trit : triit.trits) {
             os << trit;
