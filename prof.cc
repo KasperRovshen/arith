@@ -1,5 +1,5 @@
-/*я не знаю правильно я сделал или нет но решил сделать двумерный массив 
-(матрицу) размером 10000x10000 и заполнить его случайными значениями.*/
+/*я не знаю правильно я сделал или нет но решил сделать 
+матрицу размером 10000x10000 и заполнить его случайными значениями.*/
 
 
 #include <iostream>
@@ -8,45 +8,45 @@
 
 const int N = 10000;
 
-// Функция для суммирования элементов матрицы построчно (вдоль)
+//функция для суммирования элементов матрицы построчно (вдоль)
 void sum_along_rows(const std::vector<std::vector<int>>& matrix) {
     long long sum = 0;
     for (int i = 0; i < N; ++i) {
         for (int j = 0; j < N; ++j) {
-            sum += matrix[i][j];  // Суммируем элементы строки
+            sum += matrix[i][j];
         }
     }
     std::cout << "Sum along rows: " << sum << std::endl;
 }
 
-// Функция для суммирования элементов матрицы по столбцам (поперек)
+//функция для суммирования элементов матрицы по столбцам (поперек)
 void sum_along_columns(const std::vector<std::vector<int>>& matrix) {
     long long sum = 0;
     for (int j = 0; j < N; ++j) {
         for (int i = 0; i < N; ++i) {
-            sum += matrix[i][j];  // Суммируем элементы столбца
+            sum += matrix[i][j];
         }
     }
     std::cout << "Sum along columns: " << sum << std::endl;
 }
 
 int main() {
-    // Создаем двумерный массив (матрицу) и заполняем его случайными значениями
+    //создаем матрицу
     std::vector<std::vector<int>> matrix(N, std::vector<int>(N));
     srand(time(0));
     for (int i = 0; i < N; ++i) {
         for (int j = 0; j < N; ++j) {
-            matrix[i][j] = rand() % 1000;  // Заполняем случайными числами
+            matrix[i][j] = rand() % 1000;
         }
     }
     
     auto start = std::chrono::high_resolution_clock::now();
 
-    // Измеряем время выполнения суммирования построчно
+    //измеряем время выполнения суммирования построчно
     sum_along_rows(matrix);
    
     
-    // Измеряем время выполнения суммирования по столбцам
+    //измеряем время выполнения суммирования по столбцам
     sum_along_columns(matrix);
 
     auto end = std::chrono::high_resolution_clock::now();
