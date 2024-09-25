@@ -1,5 +1,3 @@
-/*я не знаю правильно я сделал или нет но решил сделать 
-матрицу размером 10000x10000 и заполнить его случайными значениями.*/
 
 
 #include <iostream>
@@ -8,47 +6,88 @@
 
 const int N = 10000;
 
-//функция для суммирования элементов матрицы построчно (вдоль)
+// Функция для суммирования элементов матрицы построчно (вдоль)
 void sum_along_rows(const std::vector<std::vector<int>>& matrix) {
     long long sum = 0;
     for (int i = 0; i < N; ++i) {
         for (int j = 0; j < N; ++j) {
-            sum += matrix[i][j];
+            sum += matrix[i][j];  // Суммируем элементы строки
         }
     }
     std::cout << "Sum along rows: " << sum << std::endl;
 }
 
-//функция для суммирования элементов матрицы по столбцам (поперек)
+// Функция для суммирования элементов матрицы по столбцам (поперек)
 void sum_along_columns(const std::vector<std::vector<int>>& matrix) {
     long long sum = 0;
     for (int j = 0; j < N; ++j) {
         for (int i = 0; i < N; ++i) {
-            sum += matrix[i][j];
+            sum += matrix[i][j];  // Суммируем элементы столбца
         }
     }
     std::cout << "Sum along columns: " << sum << std::endl;
 }
 
 int main() {
-    //создаем матрицу
+    // Создаем двумерный массив (матрицу) и заполняем его случайными значениями
     std::vector<std::vector<int>> matrix(N, std::vector<int>(N));
     srand(time(0));
     for (int i = 0; i < N; ++i) {
         for (int j = 0; j < N; ++j) {
-            matrix[i][j] = rand() % 1000;
+            matrix[i][j] = rand() % 1000;  // Заполняем случайными числами
         }
     }
     
     auto start = std::chrono::high_resolution_clock::now();
 
-    //измеряем время выполнения суммирования построчно
+    // Измеряем время выполнения суммирования построчно
     sum_along_rows(matrix);
-   
-    
-    //измеряем время выполнения суммирования по столбцам
-    sum_along_columns(matrix);
 
+// valgrind --tool=cachegrind ./prof
+
+/* 
+Sum along rows: 49948791381
+Time taken 49.2709 seconds
+
+I   refs:      36,032,772,434
+I1  misses:             2,640
+LLi misses:             2,530
+I1  miss rate:           0.00%
+LLi miss rate:           0.00%
+
+D   refs:      20,526,402,255  (13,717,124,985 rd   + 6,809,277,270 wr)
+D1  misses:        25,913,721  (    13,342,792 rd   +    12,570,929 wr)
+LLd misses:        18,820,352  (     6,303,816 rd   +    12,516,536 wr)
+D1  miss rate:            0.1% (           0.1%     +           0.2%  )
+LLd miss rate:            0.1% (           0.0%     +           0.2%  )
+
+LL refs:           25,916,361  (    13,345,432 rd   +    12,570,929 wr)
+LL misses:         18,822,882  (     6,306,346 rd   +    12,516,536 wr)
+LL miss rate:             0.0% (           0.0%     +           0.2%  )
+*/   
+    
+    // Измеряем время выполнения суммирования по столбцам
+    sum_along_columns(matrix);
+/*
+Sum along columns: 49947098384
+Time taken56.7998 seconds
+
+I   refs:      36,032,788,691
+I1  misses:             2,643
+LLi misses:             2,533
+I1  miss rate:           0.00%
+LLi miss rate:           0.00%
+
+D   refs:      20,526,407,506  (13,717,130,216 rd   + 6,809,277,290 wr)
+D1  misses:       157,160,238  (   144,589,309 rd   +    12,570,929 wr)
+LLd misses:        50,664,501  (    38,147,965 rd   +    12,516,536 wr)
+D1  miss rate:            0.8% (           1.1%     +           0.2%  )
+LLd miss rate:            0.2% (           0.3%     +           0.2%  )
+
+LL refs:          157,162,881  (   144,591,952 rd   +    12,570,929 wr)
+LL misses:         50,667,034  (    38,150,498 rd   +    12,516,536 wr)
+LL miss rate:             0.1% (           0.1%     +           0.2%  )
+*/
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> duration = end - start;
     std::cout << "Time taken" << duration.count() << " seconds" << std::endl;
@@ -60,7 +99,7 @@ int main() {
 
 /*
 
-// valgrind --tool=cachegrind ./prof
+все вместе
 
 Sum along rows: 49951420405
 Sum along columns: 49951420405
